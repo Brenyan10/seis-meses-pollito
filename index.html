@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seis meses, Pollito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: tierna, íntima, con aire; un álbum escrito a mano para una sola persona.
+   IDEA: un álbum de fotos con flores prensadas: cada capítulo es una página que se revela.
+   PICTURE: la foto de portada enmarcada, con un lirio y una rosa blancos dibujados a su lado.
+   COLOUR and TYPE: violeta profundo (su color), blanco de rosa, rubor como acento; Cormorant Garamond + Nunito Sans.
+   LAYOUT: portada violeta a sangre, línea del tiempo vertical que se dibuja al bajar, carta final violeta. */
+:root{color-scheme:light dark;
+  --bg:light-dark(#fdfbfe,#140a1c);--ink:light-dark(#271433,#f3ecf8);--soft:light-dark(#6d5a7b,#bfaecb);
+  --band:light-dark(#3f1a63,#22102f);--band-ink:#fbf6ff;--lilac:light-dark(#f2e9f9,#25142f);
+  --violet:light-dark(#5b2a86,#c59cf0);--blush:#f0a9be;--line:light-dark(#e3d4ef,#3a2547);
+  --ease-out:cubic-bezier(0.23,1,0.32,1);--ease-io:cubic-bezier(0.77,0,0.175,1);
+  --shadow:0 1px 2px rgb(40 10 60/.06),0 12px 32px -12px rgb(40 10 60/.28)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 "Nunito Sans",system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+h1,h2,.serif{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;line-height:1.05;text-wrap:balance;margin:0}
+img,video{display:block;width:100%;height:100%;object-fit:cover}
+button,a.btn{font:inherit;cursor:pointer}
+
+/* Portada */
+.hero{background:var(--band);color:var(--band-ink);padding:clamp(40px,7vw,96px) max(5vw,18px) clamp(56px,8vw,110px);position:relative;overflow:hidden}
+.hero-in{max-width:1100px;margin:auto;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(28px,5vw,72px);align-items:center}
+.frame{position:relative;justify-self:center;width:min(100%,430px)}
+.frame .ph{aspect-ratio:896/1040;border-radius:6px;overflow:hidden;box-shadow:0 30px 60px -20px rgb(0 0 0/.55);outline:10px solid #fbf6ff;outline-offset:-1px}
+.frame .lily{position:absolute;width:44%;left:-16%;bottom:-10%;transform:rotate(-14deg)}
+.frame .rose{position:absolute;width:32%;right:-9%;top:-8%;transform:rotate(12deg)}
+.kicker{font-size:15px;opacity:.82;margin:0 0 14px}
+.hero h1{font-size:clamp(44px,8vw,92px);font-style:italic;font-weight:500}
+.hero h1 span{display:block}
+.hero .sub{font-size:clamp(20px,2.4vw,26px);font-family:"Cormorant Garamond",serif;margin:18px 0 28px;opacity:.92}
+.count{display:flex;gap:10px;flex-wrap:wrap}
+.count div{background:rgb(255 255 255/.09);border:1px solid rgb(255 255 255/.16);border-radius:12px;padding:10px 14px;min-width:76px;text-align:center}
+.count b{display:block;font:600 clamp(26px,3.4vw,34px)/1 "Cormorant Garamond",serif;font-variant-numeric:tabular-nums}
+.count small{font-size:13px;opacity:.8}
+.hint{margin-top:30px;font-size:15px;opacity:.75;display:flex;align-items:center;gap:8px}
+.hint svg{width:16px;animation:nudge 2.4s var(--ease-io) infinite}
+@keyframes nudge{50%{transform:translateY(5px)}}
+
+/* Línea del tiempo */
+.story{max-width:860px;margin:auto;padding:clamp(48px,7vw,96px) max(5vw,18px) 40px;position:relative}
+.intro{font:italic 500 clamp(24px,3vw,30px)/1.3 "Cormorant Garamond",serif;color:var(--violet);text-align:center;max-width:30ch;margin:0 auto clamp(40px,6vw,72px)}
+.tl{position:relative;padding-left:44px}
+.rail,.rail-fill{position:absolute;left:12px;top:6px;bottom:0;width:2px;border-radius:2px}
+.rail{background:var(--line)}
+.rail-fill{background:var(--violet);transform-origin:top;transform:scaleY(var(--p,0))}
+.ch{position:relative;padding-bottom:clamp(56px,8vw,96px)}
+.dot{position:absolute;left:-44px;top:4px;width:26px;height:26px;border-radius:50%;background:var(--bg);border:2px solid var(--violet);display:grid;place-items:center;transform:scale(.6);opacity:.4;transition:transform 500ms var(--ease-out),opacity 500ms var(--ease-out)}
+.dot::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--violet)}
+.ch.in .dot{transform:none;opacity:1}
+.when{font-size:14px;font-weight:700;color:var(--violet);margin:0 0 6px}
+.ch h2{font-size:clamp(34px,5vw,48px);margin-bottom:14px}
+.ch p{margin:0 0 14px;max-width:62ch}
+.ch p em{font-family:"Cormorant Garamond",serif;font-size:1.18em;color:var(--violet)}
+.rv{opacity:0;transform:translateY(14px);transition:opacity 800ms var(--ease-out),transform 800ms var(--ease-out);transition-delay:var(--d,0ms)}
+.ch.in .rv{opacity:1;transform:none}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:22px}
+.ph{position:relative;border-radius:10px;overflow:hidden;background:var(--lilac);box-shadow:var(--shadow);clip-path:inset(0 0 100% 0 round 10px);transition:clip-path 1000ms var(--ease-out);transition-delay:var(--d,0ms)}
+.ch.in .ph,.hero .ph{clip-path:inset(0 0 0 0 round 10px)}
+.ph.w{grid-column:span 2;aspect-ratio:4/3}.ph.t{aspect-ratio:3/4}.ph.s{aspect-ratio:1}
+.ph button{all:unset;display:block;width:100%;height:100%;cursor:zoom-in}
+.ph img{transition:transform 500ms var(--ease-out)}
+@media(hover:hover) and (pointer:fine){.ph button:hover img{transform:scale(1.03)}}
+.ph video{background:#000;object-fit:contain}
+.tag{position:absolute;left:10px;bottom:10px;background:rgb(20 6 30/.6);color:#fff;font-size:13px;padding:3px 9px;border-radius:99px;pointer-events:none;backdrop-filter:blur(6px)}
+
+/* Carrusel de "nosotros" */
+.car-wrap{margin-top:22px;margin-right:calc(-1 * max(5vw,18px))}
+.car{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px max(5vw,18px) 16px 2px;scrollbar-width:thin}
+.car .ph{flex:none;height:min(62vw,380px);scroll-snap-align:start;--d:0ms}
+.car .ph.t{width:calc(min(62vw,380px)*.75)}.car .ph.s{width:min(62vw,380px)}.car .ph.n{width:calc(min(62vw,380px)*.5625);aspect-ratio:auto}
+.car-nav{display:flex;gap:10px;margin-top:6px}
+.icon-btn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);display:grid;place-items:center;transition:transform 160ms var(--ease-out),background-color 200ms ease}
+.icon-btn:active{transform:scale(.96)}
+.icon-btn:focus-visible,.btn:focus-visible,.ph button:focus-visible{outline:3px solid var(--blush);outline-offset:3px}
+
+.divider{display:flex;justify-content:center;gap:14px;color:var(--violet);margin:0 0 clamp(40px,6vw,64px)}
+.divider svg{width:34px;height:34px}
+
+/* Carta final */
+.letter-band{background:var(--band);color:var(--band-ink);padding:clamp(56px,8vw,110px) max(5vw,18px)}
+.letter-in{max-width:760px;margin:auto;display:grid}
+.letter-in>*{grid-area:1/1}
+.env,.letter{transition:opacity 450ms var(--ease-out),transform 450ms var(--ease-out)}
+.env{display:grid;place-items:center;text-align:center;gap:18px;padding:40px 20px}
+.env h2{font-size:clamp(38px,6vw,56px);font-style:italic;font-weight:500}
+.seal{width:110px;height:110px}
+.letter{background:#fbf6ff;color:#2a1536;border-radius:14px;padding:clamp(28px,5vw,56px);box-shadow:0 40px 80px -30px rgb(0 0 0/.6);opacity:0;transform:scale(.96) translateY(10px);pointer-events:none;visibility:hidden}
+.opened .env{opacity:0;transform:scale(.97);pointer-events:none}
+.opened .letter{opacity:1;transform:none;pointer-events:auto;visibility:visible;transition-delay:120ms}
+.letter h2{font-size:clamp(34px,5vw,46px);font-style:italic;font-weight:500;color:#5b2a86;margin-bottom:18px}
+.letter p{margin:0 0 16px;font-size:18px}
+.letter .sign{font:italic 600 26px/1.2 "Cormorant Garamond",serif;color:#5b2a86;margin-top:26px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.beagle{width:120px;flex:none}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:99px;border:0;background:#fbf6ff;color:#3f1a63;font-weight:700;text-decoration:none;transition:transform 160ms var(--ease-out),background-color 200ms ease}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:inherit;border:1.5px solid currentColor}
+.song{margin-top:30px;padding-top:24px;border-top:1px solid #e6d9f0}
+.song p{margin:0 0 12px;font-size:16px;color:#6d5a7b}
+.song .serif{font-size:28px;color:#2a1536;margin-bottom:14px}
+.song .row{display:flex;gap:10px;flex-wrap:wrap}
+.song .btn{background:#5b2a86;color:#fff}
+.song .btn.ghost{background:transparent;color:#5b2a86}
+footer{text-align:center;padding:28px 18px 40px;color:var(--soft);font-size:14px}
+
+/* Visor de fotos */
+dialog{border:0;padding:0;background:transparent;max-width:min(94vw,900px);max-height:92vh;opacity:0;transform:scale(.96);transition:opacity 220ms var(--ease-out),transform 220ms var(--ease-out)}
+dialog.show{opacity:1;transform:none}
+dialog::backdrop{background:rgb(12 4 18/.86)}
+dialog img{max-height:86vh;width:auto;max-width:100%;border-radius:10px;object-fit:contain;margin:auto}
+dialog .close{position:fixed;top:14px;right:14px;background:rgb(255 255 255/.14);color:#fff;border:0}
+
+
+/* Entrada de la portada */
+@keyframes up{from{opacity:0;transform:translateY(14px)}}
+@keyframes unveil{from{clip-path:inset(100% 0 0 0 round 6px)}}
+@keyframes bloom{from{opacity:0;transform:var(--r) scale(.9) translateY(10px)}}
+.hero .ph{animation:unveil 1200ms var(--ease-out) both}
+.frame .lily{--r:rotate(-14deg);animation:bloom 900ms var(--ease-out) 700ms both}
+.frame .rose{--r:rotate(12deg);animation:bloom 900ms var(--ease-out) 820ms both}
+.up{animation:up 900ms var(--ease-out) both;animation-delay:var(--d,0ms)}
+/* Corazón al tocar dos veces */
+.ph{touch-action:manipulation}
+.heart{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;pointer-events:none;color:#fff;filter:drop-shadow(0 6px 14px rgb(60 10 80/.45));animation:pop 900ms var(--ease-out) forwards}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}18%{opacity:1;transform:scale(1.08)}32%{transform:scale(.96)}70%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1) translateY(-18px)}}
+.tip{font-size:14px;color:var(--soft);text-align:center;margin:-36px auto 48px}
+@media(max-width:760px){
+  .hero-in{grid-template-columns:minmax(0,1fr);text-align:center}
+  .frame{width:min(78%,360px);order:-1}
+  .count,.hint{justify-content:center}
+  .count{flex-wrap:nowrap;gap:6px}.count div{min-width:0;flex:1;padding:10px 4px}
+  .tl{padding-left:34px}.rail,.rail-fill{left:8px}.dot{left:-34px;width:20px;height:20px}.dot::after{width:8px;height:8px}
+  .grid{gap:8px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv,.dot{transform:none}
+  .ph{clip-path:none;opacity:0;transition:opacity 400ms ease}
+  .ch.in .ph,.hero .ph{opacity:1}
+  .hint svg{animation:none}
+  .env,.letter,dialog{transform:none!important}
+  .hero .ph,.frame svg{animation:none}.up{animation:fade .4s ease both}.heart{animation:fade .6s ease reverse forwards}
+  @keyframes fade{from{opacity:0}}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="lily" viewBox="0 0 200 220">
+      <path d="M100 218 C98 170 96 140 100 104" fill="none" stroke="#7fa07a" stroke-width="4" stroke-linecap="round"/>
+      <path d="M99 170 C70 160 52 140 46 116 C72 124 90 142 99 170Z" fill="#8fb487"/>
+      <g fill="#ffffff" stroke="#e4d6ee" stroke-width="2">
+        <path d="M100 104 C70 92 30 70 14 30 C50 40 84 64 100 104Z"/>
+        <path d="M100 104 C130 92 170 70 186 30 C150 40 116 64 100 104Z"/>
+        <path d="M100 104 C86 70 84 34 100 4 C116 34 114 70 100 104Z"/>
+        <path d="M100 104 C76 104 40 96 20 74 C52 70 82 84 100 104Z"/>
+        <path d="M100 104 C124 104 160 96 180 74 C148 70 118 84 100 104Z"/>
+      </g>
+      <g stroke="#c99a3a" stroke-width="2" stroke-linecap="round"><path d="M100 100 L84 62"/><path d="M100 100 L100 56"/><path d="M100 100 L116 62"/></g>
+      <g fill="#b8752a"><circle cx="84" cy="60" r="4"/><circle cx="100" cy="54" r="4"/><circle cx="116" cy="60" r="4"/></g>
+    </symbol>
+    <symbol id="rose" viewBox="0 0 160 180">
+      <path d="M80 178 C80 150 82 128 80 110" fill="none" stroke="#7fa07a" stroke-width="4" stroke-linecap="round"/>
+      <path d="M81 146 C104 138 120 120 124 100 C102 106 88 124 81 146Z" fill="#8fb487"/>
+      <g stroke="#e2d3ec" stroke-width="2" fill="#ffffff">
+        <path d="M80 116 C40 116 18 90 24 58 C40 70 58 74 80 72Z"/>
+        <path d="M80 116 C120 116 142 90 136 58 C120 70 102 74 80 72Z"/>
+        <path d="M30 60 C30 30 54 12 80 12 C106 12 130 30 130 60 C112 52 96 50 80 52 C64 50 48 52 30 60Z"/>
+        <path d="M46 62 C48 40 62 28 80 28 C98 28 112 40 114 62 C100 74 60 74 46 62Z"/>
+      </g>
+      <g fill="none" stroke="#d9c6e6" stroke-width="2" stroke-linecap="round">
+        <path d="M64 52 C66 40 94 38 96 52 C96 62 70 64 70 54 C70 48 86 46 88 52"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="hero">
+  <div class="hero-in">
+    <div class="frame">
+      <div class="ph"><img src="media/portada-1.jpg" alt="Brayan cargando a Valentina frente a la rueda de Salitre Mágico" width="896" height="1040"></div>
+      <svg class="lily" aria-hidden="true"><use href="#lily"/></svg>
+      <svg class="rose" aria-hidden="true"><use href="#rose"/></svg>
+    </div>
+    <div>
+      <p class="kicker up" style="--d:250ms">Para Valentina Quiroga Barrera · 23 de noviembre de 2026</p>
+      <h1><span class="up" style="--d:330ms">Seis meses</span><span class="up" style="--d:400ms">de nosotros</span></h1>
+      <p class="sub up" style="--d:480ms">Esta es nuestra historia, Pollito. Bájala despacio, como se lee algo bonito.</p>
+      <div class="count up" style="--d:560ms" aria-live="off">
+        <div><b id="cd">0</b><small>días</small></div>
+        <div><b id="ch">0</b><small>horas</small></div>
+        <div><b id="cm">0</b><small>minutos</small></div>
+        <div><b id="cs">0</b><small>segundos</small></div>
+      </div>
+      <p class="hint up" style="--d:640ms"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 2v11M3 8l5 5 5-5"/></svg>siendo novios, y contando</p>
+    </div>
+  </div>
+</header>
+
+<main class="story">
+  <p class="intro">Todo lo bonito empieza sin avisar. El nuestro empezó entre mesas, pedidos y una barra.</p>
+
+  <p class="tip">Toca una foto para verla en grande, o dos veces para dejarle un corazón.</p>
+  <div class="tl" id="tl">
+    <div class="rail"></div><div class="rail-fill" id="fill"></div>
+
+    <section class="ch">
+      <span class="dot"></span>
+      <p class="when rv">Entrepues</p>
+      <h2 class="rv" style="--d:60ms">Donde todo empezó</h2>
+      <p class="rv" style="--d:110ms">Yo era mesero y tú llegaste a ayudar en el bar. Al principio no te vi venir. Pero, poco a poco, mis ojos empezaron a buscarte entre mesa y mesa, hasta que ya no pude dejar de mirarte.</p>
+      <p class="rv" style="--d:150ms">Un día llegué con unas flores para ti, sin saber que en realidad te estaba entregando el primer pedacito de mi corazón. Y esa noche del amigo secreto, cuando todo terminaba, nos dimos nuestro primer pico: pequeño, tímido y, sin saberlo, <em>el comienzo de todo</em>.</p>
+      <div class="grid">
+        <figure class="ph t" style="--d:100ms;margin:0"><button data-src="media/comienzo-1.jpg" aria-label="Ver foto en grande"><img src="media/comienzo-1.jpg" alt="Valentina sonriendo con un ramo de flores" loading="lazy"></button></figure>
+        <figure class="ph t" style="--d:180ms;margin:0"><button data-src="media/comienzo-2.jpg" aria-label="Ver foto en grande"><img src="media/comienzo-2.jpg" alt="El equipo del restaurante reunido" loading="lazy"></button><span class="tag">El amigo secreto</span></figure>
+      </div>
+    </section>
+
+    <section class="ch">
+      <span class="dot"></span>
+      <p class="when rv">Despedida de año</p>
+      <h2 class="rv" style="--d:60ms">La noche en que lo supe</h2>
+      <p class="rv" style="--d:110ms">Organicé una chiva rumbera para despedir el año con todos los del restaurante. Entre tú y yo las cosas no estaban del todo bien, pero esa noche, entre la música, las luces y la ciudad a nuestros pies, algo se acomodó dentro de mí.</p>
+      <p class="rv" style="--d:150ms">Entendí que lo que sentía por ti no era solo atracción. <em>Era amor.</em></p>
+      <div class="grid">
+        <figure class="ph w" style="--d:100ms;margin:0"><button data-src="media/chiva-1.jpg" aria-label="Ver foto en grande"><img src="media/chiva-1.jpg" alt="Foto grupal de la chiva con la ciudad de noche al fondo" loading="lazy"></button></figure>
+        <figure class="ph t" style="--d:170ms;margin:0"><video src="media/chiva-v.mp4" poster="media/chiva-v.jpg" controls playsinline preload="none"></video></figure>
+        <figure class="ph t" style="--d:230ms;margin:0"><button data-src="media/chiva-2.jpg" aria-label="Ver foto en grande"><img src="media/chiva-2.jpg" alt="Todos juntos en la despedida de año" loading="lazy"></button></figure>
+      </div>
+    </section>
+
+    <section class="ch">
+      <span class="dot"></span>
+      <p class="when rv">La Vega</p>
+      <h2 class="rv" style="--d:60ms">Un plan con un solo objetivo</h2>
+      <p class="rv" style="--d:110ms">Después de tu cumpleaños, y de una salida a la discoteca que no salió como esperábamos, armé un paseo a una finca en La Vega con los del trabajo. Todo ese plan tenía un solo propósito: que fueras tú.</p>
+      <p class="rv" style="--d:150ms">Cuando supe que no ibas a ir, me puse de acuerdo con un amigo y te dijimos que ya todo estaba pago, así que no tenías escapatoria. Fue la mejor decisión que pude tomar, porque allá, entre la piscina y las montañas, <em>nos enamoramos</em>.</p>
+      <div class="grid">
+        <figure class="ph w" style="--d:100ms;margin:0"><button data-src="media/finca-2.jpg" aria-label="Ver foto en grande"><img src="media/finca-2.jpg" alt="En la piscina de la finca con las montañas al fondo" loading="lazy"></button></figure>
+        <figure class="ph w" style="--d:170ms;margin:0"><button data-src="media/finca-1.jpg" aria-label="Ver foto en grande"><img src="media/finca-1.jpg" alt="El grupo del trabajo en la finca" loading="lazy"></button></figure>
+      </div>
+    </section>
+
+    <section class="ch">
+      <span class="dot"></span>
+      <p class="when rv">Tascas</p>
+      <h2 class="rv" style="--d:60ms">Nuestro primer beso</h2>
+      <p class="rv" style="--d:110ms">Te invité a Tascas con mis amigos de la universidad. Entre la música, las luces de colores y la gente bailando, el mundo se quedó quieto un segundo.</p>
+      <p class="rv" style="--d:150ms">Y ahí, por fin, nos dimos nuestro primer beso. <em>De esos que no se olvidan nunca.</em></p>
+      <div class="grid">
+        <figure class="ph w" style="--d:100ms;margin:0"><button data-src="media/tascas-1.jpg" aria-label="Ver foto en grande"><img src="media/tascas-1.jpg" alt="Los dos juntos esa noche" loading="lazy"></button></figure>
+        <figure class="ph t" style="--d:170ms;margin:0;grid-column:span 2;aspect-ratio:4/5;max-width:420px"><button data-src="media/tascas-2.jpg" aria-label="Ver foto en grande"><img src="media/tascas-2.jpg" alt="Selfie de los dos en Tascas" loading="lazy"></button></figure>
+      </div>
+    </section>
+
+    <section class="ch">
+      <span class="dot"></span>
+      <p class="when rv">Nuestras primeras citas</p>
+      <h2 class="rv" style="--d:60ms">Conociéndonos de verdad</h2>
+      <p class="rv" style="--d:110ms">Después de ese beso ya no éramos solo compañeros, ni solo amigos. Empezamos a salir y a conocernos con calma: un helado gigante, una partida de billar, risas hasta tarde y noches frías con buena compañía.</p>
+      <p class="rv" style="--d:150ms">Y en cada cita me daba cuenta de algo nuevo: <em>te amaba un poquito más que la vez anterior.</em></p>
+      <div class="grid">
+        <figure class="ph s" style="--d:100ms;margin:0"><button data-src="media/citas-1.jpg" aria-label="Ver foto en grande"><img src="media/citas-1.jpg" alt="Valentina con un helado enorme" loading="lazy"></button></figure>
+        <figure class="ph s" style="--d:160ms;margin:0"><button data-src="media/citas-2.jpg" aria-label="Ver foto en grande"><img src="media/citas-2.jpg" alt="Valentina jugando billar" loading="lazy"></button></figure>
+        <figure class="ph w" style="--d:220ms;margin:0"><button data-src="media/citas-3.jpg" aria-label="Ver foto en grande"><img src="media/citas-3.jpg" alt="Selfie de los dos de noche" loading="lazy"></button></figure>
+        <figure class="ph t" style="--d:260ms;margin:0"><button data-src="media/citas-4.jpg" aria-label="Ver foto en grande"><img src="media/citas-4.jpg" alt="Una noche con amigos" loading="lazy"></button></figure>
+        <figure class="ph t" style="--d:300ms;margin:0"><video src="media/citas-v.mp4" poster="media/citas-v.jpg" controls playsinline preload="none"></video></figure>
+      </div>
+    </section>
+
+    <section class="ch">
+      <span class="dot"></span>
+      <p class="when rv">23 de mayo de 2026</p>
+      <h2 class="rv" style="--d:60ms">La pregunta</h2>
+      <p class="rv" style="--d:110ms">Al mes de estar saliendo te llevé a una cena romántica. Rosas blancas, una tarjeta escrita a mano y una pregunta que llevaba tiempo guardando: <em>¿quieres ser mi novia?</em></p>
+      <p class="rv" style="--d:150ms">Dijiste que sí. Y desde esa noche ya no fuimos tú y yo. <em>Fuimos nosotros.</em></p>
+      <div class="grid">
+        <figure class="ph t" style="--d:100ms;margin:0"><button data-src="media/novios-1.jpg" aria-label="Ver foto en grande"><img src="media/novios-1.jpg" alt="Los dos en la cena romántica con el ramo de rosas blancas" loading="lazy"></button></figure>
+        <figure class="ph t" style="--d:170ms;margin:0"><button data-src="media/novios-2.jpg" aria-label="Ver foto en grande"><img src="media/novios-2.jpg" alt="Las rosas blancas y la tarjeta con la pregunta" loading="lazy"></button></figure>
+      </div>
+    </section>
+
+    <section class="ch">
+      <span class="dot"></span>
+      <p class="when rv">Después del sí</p>
+      <h2 class="rv" style="--d:60ms">Lo que vino después</h2>
+      <p class="rv" style="--d:110ms">Vinieron días que nunca voy a olvidar: helados, siestas robadas, paseos en moto, caminatas, cine, billar y mil fotos bobas. Momentos llenos de risas, de alegría y de muchísimo amor.</p>
+      <div class="car-wrap rv" style="--d:150ms">
+        <div class="car" id="car" tabindex="0" aria-label="Fotos de nosotros">
+          <figure class="ph t" style="margin:0"><button data-src="media/nosotros-9.jpg" aria-label="Ver foto en grande"><img src="media/nosotros-9.jpg" alt="Selfie de los dos en el pasto" loading="lazy"></button></figure>
+          <figure class="ph s" style="margin:0"><video src="media/nosotros-v1.mp4" poster="media/nosotros-v1.jpg" controls playsinline preload="none"></video></figure>
+          <figure class="ph t" style="margin:0"><button data-src="media/nosotros-7.jpg" aria-label="Ver foto en grande"><img src="media/nosotros-7.jpg" alt="Valentina con un helado" loading="lazy"></button></figure>
+          <figure class="ph t" style="margin:0"><button data-src="media/nosotros-1.jpg" aria-label="Ver foto en grande"><img src="media/nosotros-1.jpg" alt="Una siesta compartida" loading="lazy"></button></figure>
+          <figure class="ph n" style="margin:0"><button data-src="media/nosotros-5.jpg" aria-label="Ver foto en grande"><img src="media/nosotros-5.jpg" alt="Los dos sonriendo" loading="lazy"></button></figure>
+          <figure class="ph t" style="margin:0"><button data-src="media/nosotros-3.jpg" aria-label="Ver foto en grande"><img src="media/nosotros-3.jpg" alt="Valentina caminando con un perrito" loading="lazy"></button></figure>
+          <figure class="ph s" style="margin:0"><button data-src="media/nosotros-6.jpg" aria-label="Ver foto en grande"><img src="media/nosotros-6.jpg" alt="Valentina dormida en el hombro de Brayan" loading="lazy"></button></figure>
+          <figure class="ph t" style="margin:0"><button data-src="media/nosotros-8.jpg" aria-label="Ver foto en grande"><img src="media/nosotros-8.jpg" alt="Paseo en moto" loading="lazy"></button></figure>
+          <figure class="ph t" style="margin:0"><video src="media/nosotros-v2.mp4" poster="media/nosotros-v2.jpg" controls playsinline preload="none"></video></figure>
+          <figure class="ph n" style="margin:0"><button data-src="media/nosotros-2.jpg" aria-label="Ver foto en grande"><img src="media/nosotros-2.jpg" alt="Tira de fotos dándose besos" loading="lazy"></button></figure>
+          <figure class="ph t" style="margin:0"><button data-src="media/nosotros-4.jpg" aria-label="Ver foto en grande"><img src="media/nosotros-4.jpg" alt="Valentina jugando billar" loading="lazy"></button></figure>
+          <figure class="ph t" style="margin:0"><button data-src="media/nosotros-10.jpg" aria-label="Ver foto en grande"><img src="media/nosotros-10.jpg" alt="La boleta de cine" loading="lazy"></button></figure>
+        </div>
+        <div class="car-nav">
+          <button class="icon-btn" id="prev" aria-label="Fotos anteriores"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 3 5 8l5 5"/></svg></button>
+          <button class="icon-btn" id="next" aria-label="Más fotos"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 3 5 5-5 5"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="ch">
+      <span class="dot"></span>
+      <p class="when rv">Salitre Mágico</p>
+      <h2 class="rv" style="--d:60ms">Un día mágico, de verdad</h2>
+      <p class="rv" style="--d:110ms">Una de mis salidas favoritas como novios: Salitre Mágico con amigos, la primera vez para los dos. Gritamos, reímos, nos subimos a todo y probamos quién pegaba más duro.</p>
+      <p class="rv" style="--d:150ms">Por eso la foto de la portada es de ese día. Porque así me siento contigo: <em>como en un parque de diversiones que nunca cierra.</em></p>
+      <div class="grid">
+        <figure class="ph w" style="--d:100ms;margin:0"><button data-src="media/salitre-1.jpg" aria-label="Ver foto en grande"><img src="media/salitre-1.jpg" alt="Selfie de los dos en Salitre Mágico" loading="lazy"></button></figure>
+        <figure class="ph t" style="--d:160ms;margin:0"><button data-src="media/salitre-3.jpg" aria-label="Ver foto en grande"><img src="media/salitre-3.jpg" alt="Con los amigos en el parque" loading="lazy"></button></figure>
+        <figure class="ph t" style="--d:220ms;margin:0"><video src="media/salitre-v.mp4" poster="media/salitre-v.jpg" controls playsinline preload="none"></video></figure>
+        <figure class="ph w" style="--d:260ms;margin:0"><button data-src="media/salitre-2.jpg" aria-label="Ver foto en grande"><img src="media/salitre-2.jpg" alt="Los dos sonriendo en el parque" loading="lazy"></button></figure>
+      </div>
+    </section>
+
+    <section class="ch" style="padding-bottom:24px">
+      <span class="dot"></span>
+      <p class="when rv">Hoy</p>
+      <h2 class="rv" style="--d:60ms">Nuestro hogar</h2>
+      <p class="rv" style="--d:110ms">Y ahora, Pollito, llevamos tres semanas viviendo juntos y seis meses siendo novios. Compartimos casa, mañanas, comidas y hasta el piso para echarnos a descansar.</p>
+      <p class="rv" style="--d:150ms">Y todavía me parece increíble despertar y que estés ahí. <em>Este capítulo apenas empieza.</em></p>
+      <div class="grid">
+        <figure class="ph t" style="--d:100ms;margin:0"><button data-src="media/juntos-2.jpg" aria-label="Ver foto en grande"><img src="media/juntos-2.jpg" alt="Valentina feliz con los pulgares arriba" loading="lazy"></button></figure>
+        <figure class="ph t" style="--d:170ms;margin:0"><button data-src="media/juntos-1.jpg" aria-label="Ver foto en grande"><img src="media/juntos-1.jpg" alt="Valentina descansando en el piso de la casa" loading="lazy"></button></figure>
+      </div>
+    </section>
+  </div>
+</main>
+
+
+<section class="letter-band">
+  <div class="letter-in" id="letterWrap">
+    <div class="env">
+      <svg class="seal" viewBox="0 0 110 110" aria-hidden="true"><circle cx="55" cy="55" r="52" fill="#fbf6ff" opacity=".12"/><use href="#rose" x="18" y="14" width="74" height="84"/></svg>
+      <h2>Hay una carta para ti</h2>
+      <button class="btn" id="open">Abrir mi carta</button>
+    </div>
+    <article class="letter" id="letter" aria-hidden="true">
+      <h2>Mi Pollito:</h2>
+      <p>Gracias por estos seis meses a tu lado. Por cada risa, cada abrazo y cada día en que decidimos seguir eligiéndonos. Estoy muy agradecido por todo lo que hemos vivido, y muy emocionado por todo lo que todavía nos falta por vivir.</p>
+      <p>Quiero seguir compartiendo contigo cada momento y cada sonrisa: los planes grandes, los pequeños y también los días normales, que contigo nunca son normales.</p>
+      <p>Y ahora mismo estoy feliz, felicísimo, porque este año… <strong>¡vamos a pasar Navidad juntos!</strong> Qué felicidad tan grande.</p>
+      <p>Te amo.</p>
+      <div class="sign">
+        <span>Con todo mi amor,<br>Brayan</span>
+        <svg class="beagle" viewBox="0 0 140 130" aria-hidden="true">
+          <ellipse cx="72" cy="124" rx="46" ry="5" fill="#000" opacity=".08"/>
+          <path d="M104 96 C118 84 122 66 116 52" fill="none" stroke="#b0702e" stroke-width="7" stroke-linecap="round"/>
+          <path d="M116 52 C114 46 112 44 110 42" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+          <path d="M44 122 C38 96 46 74 70 70 C96 66 110 86 108 122Z" fill="#c98a45"/>
+          <path d="M58 76 C74 70 96 74 104 92 C98 102 72 104 60 92Z" fill="#2c2420"/>
+          <path d="M56 122 C54 104 58 90 66 86 C74 96 74 110 72 122Z" fill="#fff"/>
+          <rect x="50" y="108" width="14" height="16" rx="7" fill="#fff"/><rect x="70" y="108" width="14" height="16" rx="7" fill="#fff"/>
+          <path d="M34 40 C34 22 50 14 64 16 C80 18 88 32 84 48 C82 60 72 70 58 70 C44 70 34 58 34 40Z" fill="#c98a45"/>
+          <path d="M52 30 C56 40 56 52 50 64 C56 70 66 70 72 64 C66 52 64 40 66 30 C62 26 56 26 52 30Z" fill="#fff"/>
+          <path d="M38 30 C28 34 24 52 28 68 C32 74 40 72 42 64 C44 52 44 40 38 30Z" fill="#8a4f20"/>
+          <path d="M80 30 C90 34 94 52 90 68 C86 74 78 72 76 64 C74 52 74 40 80 30Z" fill="#8a4f20"/>
+          <ellipse cx="60" cy="62" rx="9" ry="6" fill="#fff"/>
+          <ellipse cx="60" cy="58" rx="5" ry="3.5" fill="#2c2420"/>
+          <circle cx="50" cy="40" r="3.4" fill="#2c2420"/><circle cx="70" cy="40" r="3.4" fill="#2c2420"/>
+          <circle cx="51" cy="39" r="1" fill="#fff"/><circle cx="71" cy="39" r="1" fill="#fff"/>
+          <path d="M56 66 Q60 70 64 66" fill="none" stroke="#2c2420" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M96 22 c-4-6 -14-2 -8 6 l8 8 8-8 c6-8 -4-12 -8-6z" fill="#e57a9c"/>
+        </svg>
+      </div>
+      <div class="song">
+        <p>Nuestra canción</p>
+        <div class="serif">“¿Qué tal si eres tú?” · Los Tigres del Norte</div>
+        <div class="row">
+          <a class="btn" href="https://www.youtube.com/results?search_query=Qu%C3%A9+tal+si+eres+t%C3%BA+Los+Tigres+del+Norte" target="_blank" rel="noopener">Escuchar en YouTube</a>
+          <a class="btn ghost" href="https://open.spotify.com/search/Qu%C3%A9%20tal%20si%20eres%20t%C3%BA%20Los%20Tigres%20del%20Norte" target="_blank" rel="noopener">Abrir en Spotify</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<footer>Hecho con amor para Valentina · Seis meses y lo que falta</footer>
+
+<dialog id="viewer" aria-label="Foto en grande">
+  <button class="icon-btn close" id="vclose" aria-label="Cerrar"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3l10 10M13 3 3 13"/></svg></button>
+  <img id="vimg" alt="">
+</dialog>
+
+<script>
+{
+  // Contador desde el 23 de mayo de 2026 (hora de Bogotá)
+  const start = new Date('2026-05-23T00:00:00-05:00').getTime();
+  const $ = id => document.getElementById(id);
+  const tick = () => {
+    let s = Math.max(0, Math.floor((Date.now() - start) / 1000));
+    const d = Math.floor(s / 86400); s -= d * 86400;
+    const h = Math.floor(s / 3600); s -= h * 3600;
+    const m = Math.floor(s / 60); s -= m * 60;
+    $('cd').textContent = d; $('ch').textContent = h; $('cm').textContent = m; $('cs').textContent = s;
+  };
+  tick(); setInterval(tick, 1000);
+
+  // Capítulos que se revelan al bajar
+  const chapters = document.querySelectorAll('.ch');
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }, { rootMargin: '0px 0px -18% 0px', threshold: 0.05 });
+  chapters.forEach(c => io.observe(c));
+
+  // La línea se dibuja con el scroll
+  const tl = $('tl'), fill = $('fill');
+  let ticking = false;
+  const update = () => {
+    const r = tl.getBoundingClientRect();
+    const p = Math.min(1, Math.max(0, (innerHeight * 0.6 - r.top) / r.height));
+    fill.style.setProperty('--p', p.toFixed(4));
+    ticking = false;
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  addEventListener('resize', update); update();
+
+  // Carrusel
+  const car = $('car');
+  const step = dir => car.scrollBy({ left: dir * car.clientWidth * 0.8, behavior: 'smooth' });
+  $('prev').addEventListener('click', () => step(-1));
+  $('next').addEventListener('click', () => step(1));
+  car.addEventListener('keydown', e => { if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1); });
+
+  // Solo un video sonando a la vez
+  const vids = document.querySelectorAll('video');
+  vids.forEach(v => v.addEventListener('play', () => vids.forEach(o => { if (o !== v) o.pause(); })));
+
+  // Visor de fotos
+  const dlg = $('viewer'), vimg = $('vimg');
+  const close = () => { dlg.classList.remove('show'); setTimeout(() => dlg.close(), 160); };
+  const openPhoto = b => {
+    vimg.src = b.dataset.src; vimg.alt = b.querySelector('img').alt;
+    try { dlg.showModal(); } catch (err) { dlg.setAttribute('open', ''); }
+    requestAnimationFrame(() => dlg.classList.add('show'));
+  };
+  const heart = fig => {
+    const h = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    h.setAttribute('viewBox', '0 0 24 24'); h.setAttribute('class', 'heart');
+    h.innerHTML = '<path fill="currentColor" d="M12 21s-7.5-4.6-10-9.3C.4 8.4 2.3 4 6.4 4c2.3 0 3.8 1.3 5.6 3.4C13.8 5.3 15.3 4 17.6 4 21.7 4 23.6 8.4 22 11.7 19.5 16.4 12 21 12 21z"/>';
+    fig.appendChild(h); h.addEventListener('animationend', () => h.remove());
+  };
+  document.querySelectorAll('.ph button[data-src]').forEach(b => {
+    let t = null;
+    b.addEventListener('click', () => {
+      if (t) { clearTimeout(t); t = null; heart(b.parentElement); return; }
+      t = setTimeout(() => { t = null; openPhoto(b); }, 260);
+    });
+  });
+  $('vclose').addEventListener('click', close);
+  dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
+  dlg.addEventListener('cancel', e => { e.preventDefault(); close(); });
+
+  // Carta
+  $('open').addEventListener('click', () => {
+    $('letterWrap').classList.add('opened');
+    $('letter').setAttribute('aria-hidden', 'false');
+  });
+}
+</script>
+</body>
+</html>
